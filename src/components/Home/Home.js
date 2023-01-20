@@ -10,10 +10,16 @@ function Home() {
   // const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(false);
   // const [hasMore, setHasMore] = useState(false);
-
   
+  const [pageNum, setPageNum] = useState(1);
+
+  const loadMore = () => {
+    setPageNum( pageNum + 1 )
+  }
+
   useEffect(() => {
-    const url = `${API_URL}movie/popular?api_key=${API_KEY}&page=1`;
+    const url = `${API_URL}movie/popular?api_key=${API_KEY}&page=${pageNum}`;
+    
     const fetchItem = async() => {     
       try {
         const reponse = await fetch(url);
@@ -21,6 +27,8 @@ function Home() {
         console.log(json);
         setHeroImage(json.results[0]);
         setMovies(json.results);
+        setPageNum(json.page)
+        
       }
       catch(err) {
         console.log("error", err);
@@ -29,11 +37,10 @@ function Home() {
     }
 
     fetchItem();
-    
-  }, []);
+  }, [pageNum]);
+  
+  
 
-  
-  
   return (
     <div className="movie-home">
        <h1>Home</h1>
@@ -57,7 +64,9 @@ function Home() {
           }
           
        </div>
-       <div>{error}</div>
+       {/* <div>{isLoading && "Loading..."}</div> */}
+       <button onClick={loadMore}>Load more</button>
+       <div>{error && "Something wrong"}</div>
     </div>
   ); 
 }
