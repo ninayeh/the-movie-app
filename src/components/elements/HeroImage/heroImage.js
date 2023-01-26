@@ -1,12 +1,20 @@
+import Carousel from 'react-bootstrap/Carousel';
+
 function HeroImage(props) {
   return ( 
-    <div>
-      <h2>heroimage</h2>
-      <img src={props.image} alt={props.title}/>
-      
-      <h1>{props.title}</h1>
-      <p>{props.text}</p>
-    </div>
+    <Carousel slide="false">
+      <Carousel.Item>
+        <img
+          className="d-block w-100"
+          src={props.image} 
+          alt={props.title}
+        />
+        <Carousel.Caption>
+          <h3>{props.title}</h3>
+          <p>{props.text}</p>
+        </Carousel.Caption>
+      </Carousel.Item>
+    </Carousel>
    );
 }
 
